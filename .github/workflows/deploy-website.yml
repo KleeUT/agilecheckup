@@ -1,5 +1,4 @@
 name: deploy-website
-on: push # Run on all branches while developing
 on:
   push:
     branches:
