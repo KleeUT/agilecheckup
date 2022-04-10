@@ -12,4 +12,6 @@ jobs:
       - name: Publish
         uses: cloudflare/wrangler-action@1.3.0
         with:
+          preCommands: yarn deploy
+          publish: false # use deploy script to deploy
           apiToken: ${{ secrets.CF_API_TOKEN }}
