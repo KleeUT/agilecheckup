@@ -30,7 +30,7 @@ jobs:
   deploy:
     if: github.ref == 'refs/heads/main'
     needs:
-      - public
+      - build
     runs-on: ubuntu-latest
     name: Deploy
     steps:
@@ -38,7 +38,7 @@ jobs:
       - name: download artifact
         uses: actions/download-artifact@v2
         with:
-          name: build
+          name: public
       - name: extract public
         run: tar -xzvf public.tar.gz
       - name: Publish
