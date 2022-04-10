@@ -1,0 +1,16 @@
+name = "agilecheckup"
+type = "webpack"
+
+route = 'www.agilecheckup.info/*'
+
+account_id = '44cb8adab02ef7b388b48091a6be4673'
+zone_id = 'e1fa773df9f4baa0b83356269168ecba'
+
+workers_dev = true
+usage_model = ''
+compatibility_flags = []
+compatibility_date = "2022-04-10"
+
+[site]
+bucket = "./public"
+entry-point = "workers-site"
