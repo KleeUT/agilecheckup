@@ -30,7 +30,7 @@ jobs:
   deploy:
     if: github.ref == 'refs/heads/main'
     needs:
-      - build
+      - public
     runs-on: ubuntu-latest
     name: Deploy
     steps:
