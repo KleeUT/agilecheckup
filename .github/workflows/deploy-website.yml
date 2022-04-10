@@ -28,6 +28,9 @@ jobs:
           name: public
           path: public.tar.gz
   deploy:
+    if: github.ref == 'refs/heads/main'
+    needs:
+      - build
     runs-on: ubuntu-latest
     name: Deploy
     steps:
