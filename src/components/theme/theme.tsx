@@ -22,8 +22,8 @@ const dark: Theme = {
     backgroundHilight: "#3c074b",
     text: { copy: "#ffefff", warning: "#f08023" },
     button: {
-      text: "#1f151f",
-      primary: "#3a3",
+      text: "#33aa33",
+      primary: "#1f151f",
     },
   },
 };
@@ -33,7 +33,7 @@ const light: Theme = {
     background: "#ffefff",
     backgroundHilight: "#a77cb3",
     text: { copy: "#1f151f", warning: "#be5500" },
-    button: { text: "#fdf", primary: "#3a3" },
+    button: { text: "#ffddff", primary: "#33aa33" },
   },
 };
 

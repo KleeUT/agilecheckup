@@ -71,11 +71,11 @@ function QuestionDisplay({
     <div>
       <Headings.H1 size={2}>{question.text}</Headings.H1>
       {question.options.map((option) => (
-        <Buttons.OptionButton
+        <Buttons.Button
           onClick={() => onSelect({ selectedOption: option, question })}
         >
           {option.text}
-        </Buttons.OptionButton>
+        </Buttons.Button>
       ))}
     </div>
   );

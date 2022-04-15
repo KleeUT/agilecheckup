@@ -1,14 +1,51 @@
 import { useQuiz } from "./quiz";
-import { useState } from "react";
-jest.mock("react", () => ({
-  useState: (initial: any) => [initial, jest.fn()],
-}));
+import React from "react";
 
-const asMock = <T>(anything: T): jest.Mock<T> =>
-  anything as unknown as jest.Mock<T>;
+const basicQuestion = (): Question => {
+  return {
+    text: "basic question",
+    advice: [],
+    options: [
+      {
+        score: 1,
+        text: "Answer 1",
+      },
+      {
+        score: 2,
+        text: "Answer 2",
+      },
+    ],
+  };
+};
+
 describe(useQuiz, () => {
+  beforeEach(() => {
+    jest.resetAllMocks();
+  });
+  const setupMocks = () => {
+    const mockUseState = jest.spyOn(React, "useState");
+    const mockSetCurrentIndex: React.Dispatch<unknown> = jest.fn();
+    const mockSetResults: React.Dispatch<unknown> = jest.fn();
+    mockUseState.mockReturnValueOnce([0, mockSetCurrentIndex]);
+    mockUseState.mockReturnValueOnce([[], mockSetResults]);
+    return {
+      mockSetCurrentIndex,
+      mockSetResults,
+    };
+  };
   it("should provide the next question", () => {
-    // asMock(useState).mockImplementation((v) => [v, jest.fn()]);
-    const quiz = useQuiz([]);
+    // mock.mockImplementation(() => ([x, a]))
+    setupMocks();
+    const quiz = useQuiz([basicQuestion()]);
+    expect(quiz.currentQuestion()).toEqual(basicQuestion());
+  });
+  it("should store answers to a question", () => {
+    const { mockSetResults } = setupMocks();
+    const quiz = useQuiz([basicQuestion()]);
+    const question = basicQuestion();
+    expect(mockSetResults).toHaveBeenCalledWith({
+      question,
+      selectedOption: question.options[0],
+    });
   });
 });
