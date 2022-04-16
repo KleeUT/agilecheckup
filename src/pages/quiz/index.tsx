@@ -1,8 +1,7 @@
 import React, { ButtonHTMLAttributes, useState } from "react";
 import { css, PropsOf, ThemeProvider, useTheme } from "@emotion/react";
-import { Containers, Headings, Theme, Buttons } from "../components";
-import { Link } from "gatsby";
-import { useQuiz } from "../domain/quiz";
+import { Containers, Headings, Theme, Buttons } from "../../components";
+import { Quiz, useQuiz } from "../../domain";
 
 const { Main } = Containers;
 
@@ -81,15 +80,27 @@ function QuestionDisplay({
   );
 }
 
+function LinkToResults({ quiz }: { quiz: Quiz }) {
+  return (
+    <Buttons.FeatureButtonLink to="/quiz/results" state={quiz}>
+      Get Results
+    </Buttons.FeatureButtonLink>
+  );
+}
+
 function QuizPage() {
   const quiz = useQuiz([deployFrequency, automatedTests]);
   return (
     <ThemeProvider theme={Theme.theme(Theme.Variant.dark)}>
       <Main>
-        <QuestionDisplay
-          onSelect={quiz.answerQuestion}
-          question={quiz.currentQuestion()}
-        />
+        {quiz.complete ? (
+          <LinkToResults quiz={quiz} />
+        ) : (
+          <QuestionDisplay
+            onSelect={quiz.answerQuestion}
+            question={quiz.currentQuestion()}
+          />
+        )}
       </Main>
     </ThemeProvider>
   );

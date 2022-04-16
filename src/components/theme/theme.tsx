@@ -9,7 +9,7 @@ type ColorPalette = {
   background: string;
   backgroundHilight: string;
   text: { copy: string; warning: string };
-  button: { text: string; primary: string };
+  button: { feature: string; primary: string };
 };
 export type Theme = {
   variation: Variant;
@@ -22,7 +22,7 @@ const dark: Theme = {
     backgroundHilight: "#3c074b",
     text: { copy: "#ffefff", warning: "#f08023" },
     button: {
-      text: "#33aa33",
+      feature: "#33aa33",
       primary: "#1f151f",
     },
   },
@@ -33,7 +33,7 @@ const light: Theme = {
     background: "#ffefff",
     backgroundHilight: "#a77cb3",
     text: { copy: "#1f151f", warning: "#be5500" },
-    button: { text: "#ffddff", primary: "#33aa33" },
+    button: { primary: "#ffddff", feature: "#33aa33" },
   },
 };
 

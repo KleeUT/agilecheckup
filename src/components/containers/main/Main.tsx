@@ -40,7 +40,15 @@ export const Main = ({
           }
         `}
       />
-      {children}
+      <div
+        css={css`
+          box-sizing: border-box;
+          width: 920px;
+          max-width: 100%;
+        `}
+      >
+        {children}
+      </div>
     </div>
   );
 };
