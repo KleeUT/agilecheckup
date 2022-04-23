@@ -1,18 +1,53 @@
 import { useState } from "react";
+import { QuizRepository } from "./quizRepository";
 
-export const useQuiz = (questions: Question[]) => {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [results, setResults] = useState<Result[]>([]);
+const upsertResult = (
+  currentResults: Result[],
+  newResult: Result
+): Result[] => {
+  const duplicateQuestionIndex = currentResults.findIndex((x) => {
+    return x.question.text === newResult.question.text;
+  });
+  if (duplicateQuestionIndex === -1) {
+    return [...currentResults, newResult];
+  }
+  const beforeDuplicate = currentResults.slice(0, duplicateQuestionIndex);
+  const afterDuplicate = currentResults.slice(
+    duplicateQuestionIndex + 1,
+    currentResults.length
+  );
+  return [...beforeDuplicate, newResult, ...afterDuplicate];
+};
 
+export const useQuiz = (repo: QuizRepository) => {
+  const [state, updateState] = useState(repo.retrieveState());
   return {
     currentQuestion(): Question {
-      return questions[currentIndex];
+      return state.questions[state.currentIndex];
     },
     answerQuestion(result: Result): void {
-      setResults([...results, result]);
-      setCurrentIndex(currentIndex + 1);
+      const updatedState = {
+        ...state,
+        results: upsertResult(state.results, result),
+        currentIndex: state.currentIndex + 1,
+      };
+      repo.update(updatedState);
+      updateState(updatedState);
     },
-    complete: currentIndex >= questions.length,
+    complete: state.currentIndex >= state.questions.length,
+    previousQuestion: () => {
+      updateState({
+        ...state,
+        currentIndex: Math.max(0, state.currentIndex - 1),
+      });
+    },
+    reset: () => {
+      updateState({
+        ...state,
+        results: [],
+        currentIndex: 0,
+      });
+    },
   };
 };
 

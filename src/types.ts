@@ -17,3 +17,9 @@ type Result = {
   question: Question;
   selectedOption: Option;
 };
+
+type QuizState = {
+  results: Result[];
+  questions: Question[];
+  currentIndex: number;
+};
