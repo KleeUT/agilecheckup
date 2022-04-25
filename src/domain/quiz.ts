@@ -21,6 +21,10 @@ const upsertResult = (
 
 export const useQuiz = (repo: QuizRepository) => {
   const [state, updateState] = useState(repo.retrieveState());
+  const update = (state: QuizState) => {
+    repo.update(state);
+    updateState(state);
+  };
   return {
     currentQuestion(): Question {
       return state.questions[state.currentIndex];
@@ -31,23 +35,24 @@ export const useQuiz = (repo: QuizRepository) => {
         results: upsertResult(state.results, result),
         currentIndex: state.currentIndex + 1,
       };
-      repo.update(updatedState);
-      updateState(updatedState);
+      update(updatedState);
     },
     complete: state.currentIndex >= state.questions.length,
     previousQuestion: () => {
-      updateState({
+      console.log("Prev", state);
+      update({
         ...state,
         currentIndex: Math.max(0, state.currentIndex - 1),
       });
     },
     reset: () => {
-      updateState({
+      update({
         ...state,
         results: [],
         currentIndex: 0,
       });
     },
+    hasPreviousQuestion: state.currentIndex > 0,
   };
 };
 

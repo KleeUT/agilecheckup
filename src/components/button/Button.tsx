@@ -22,14 +22,16 @@ const buttonStyle = (theme: Theme, variation: ButtonVariation) => {
     border-radius: 1rem;
     border: 0;
     width: 100%;
-    margin-top: 1rem;
+    max-height: 100%;
     font-family: sans-serif;
     text-decoration: none;
-    display: block;
-    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     box-shadow: -3px 3px 0px 0px
       ${lightenDarkenColor(theme.colors.backgroundHilight, -25)};
-    box-shadow: ${background};
+    /* box-shadow: ${background}; */
+    box-shadow: -1px 1px 0px 0px black;
     position: relative;
     :hover {
       font-weight: bold;
@@ -37,11 +39,11 @@ const buttonStyle = (theme: Theme, variation: ButtonVariation) => {
     }
     :active {
       background-color: ${lightenDarkenColor(background, -5)};
-      box-shadow: -1px 1px 0px 0px black;
     }
     > div {
       width: 10%;
-      height: 10px;
+      height: 10%;
+      max-height: 10px;
       top: 10px;
       right: 10px;
       border-radius: 3px;
@@ -71,26 +73,36 @@ export const Button = ({
       {...props}
     >
       {children}
-      <div />
+      {/* <div /> */}
     </button>
   );
 };
 
 export function ButtonLink({
   to,
+  onClick,
   children,
 }: {
-  to: string;
+  to?: string;
+  onClick?: () => void;
   children: React.ReactNode;
 }) {
   const theme = useMyTheme();
-
-  return (
-    <Link to={to} css={buttonStyle(theme, ButtonVariation.base)}>
-      {children}
-      <div />
-    </Link>
-  );
+  if (to) {
+    return (
+      <Link to={to} css={buttonStyle(theme, ButtonVariation.base)}>
+        {children}
+        {/* <div /> */}
+      </Link>
+    );
+  } else {
+    return (
+      <a onClick={onClick} css={buttonStyle(theme, ButtonVariation.base)}>
+        {children}
+        {/* <div /> */}
+      </a>
+    );
+  }
 }
 export function FeatureButtonLink({
   to,
@@ -110,7 +122,7 @@ export function FeatureButtonLink({
       css={buttonStyle(theme, ButtonVariation.feature)}
     >
       {children}
-      <div />
+      {/* <div /> */}
     </Link>
   );
 }

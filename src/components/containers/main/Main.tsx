@@ -1,11 +1,14 @@
 import React from "react";
 import { css, useTheme, Global } from "@emotion/react";
 import { Theme } from "../../theme";
+import { Header } from "../../header";
 
 export const Main = ({
   children,
+  onPrevClicked,
 }: {
   children: React.ReactNode;
+  onPrevClicked?: () => void;
 }): JSX.Element => {
   const theme = useTheme() as Theme;
   return (
@@ -45,9 +48,22 @@ export const Main = ({
           box-sizing: border-box;
           width: 920px;
           max-width: 100%;
+          height: 100%;
+          display: grid;
+          grid-template-rows: 100px 1fr;
         `}
       >
-        {children}
+        <Header onPrevClicked={onPrevClicked} />
+        <div
+          css={css`
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+          `}
+        >
+          {children}
+        </div>
       </div>
     </div>
   );
