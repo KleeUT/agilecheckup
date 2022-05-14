@@ -4,7 +4,9 @@ type Option = {
 };
 
 type Advice = {
-  ranks: number[];
+  scores: number[];
+  text: string;
+  priority: number;
 };
 
 type Question = {
@@ -22,4 +24,10 @@ type QuizState = {
   results: Result[];
   questions: Question[];
   currentIndex: number;
+};
+
+type QuizAnalysis = {
+  results: Result[];
+  prioritisedAdvice: Advice[];
+  scorePercent: number;
 };

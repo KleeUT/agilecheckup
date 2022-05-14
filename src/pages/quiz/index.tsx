@@ -67,7 +67,6 @@ function LinkToResults({ quiz }: { quiz: Quiz }) {
 
 function QuizPage() {
   const quiz = useQuiz(createRepository(localStorage, quizFactory));
-  console.log(quiz);
   return (
     <ThemeProvider theme={Theme.theme(Theme.Variant.dark)}>
       <Main

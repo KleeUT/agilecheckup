@@ -52,6 +52,5 @@ export const H2 = ({
   cssOverride?: SerializedStyles;
 }): JSX.Element => {
   const theme = useMyTheme();
-  console.log("Passed h2", cssOverride);
   return <h1 css={headingStyles(theme, size, cssOverride)}>{children}</h1>;
 };
