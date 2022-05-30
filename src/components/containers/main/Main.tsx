@@ -28,6 +28,7 @@ export const Main = ({
         justify-content: center;
         padding: 1rem;
         box-sizing: border-box;
+        overflow: auto;
       `}
     >
       <Global
@@ -36,6 +37,10 @@ export const Main = ({
             padding: 0;
             margin: 0;
             font-size: 18pt;
+            background-color: black;
+            @media screen and (max-width: 42rem) {
+              font-size: 14pt;
+            }
           }
           * {
             box-sizing: border-box;

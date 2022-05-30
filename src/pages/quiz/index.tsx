@@ -11,6 +11,7 @@ import {
 import { Quiz, useQuiz } from "../../domain";
 import { createRepository } from "../../domain/quizRepository";
 import { quizFactory } from "../../domain/quizFactory";
+import { questionFactory } from "../../domain/questionFactory";
 
 const { Main } = Containers;
 
@@ -66,7 +67,10 @@ function LinkToResults({ quiz }: { quiz: Quiz }) {
 }
 
 function QuizPage() {
-  const quiz = useQuiz(createRepository(localStorage, quizFactory));
+  const quiz = useQuiz(
+    createRepository(localStorage, quizFactory),
+    questionFactory()
+  );
   return (
     <ThemeProvider theme={Theme.theme(Theme.Variant.dark)}>
       <Main

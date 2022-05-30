@@ -52,7 +52,6 @@ const basicQuestion3 = (): Question => {
 };
 const basicState = (): QuizState => ({
   currentIndex: 0,
-  questions: [],
   results: [],
 });
 
@@ -65,7 +64,7 @@ describe(useQuiz, () => {
   beforeEach(() => {
     jest.resetAllMocks();
   });
-  const setup = (sampleState: Partial<QuizState>) => {
+  const setup = (sampleState: Partial<QuizState>, questions: Question[]) => {
     const mockSetState: React.Dispatch<unknown> = jest.fn();
     const repositoryUpdateMock = jest.fn();
 
@@ -75,7 +74,7 @@ describe(useQuiz, () => {
     };
     useStateMock().mockReturnValueOnce([repo.retrieveState(), mockSetState]);
 
-    const quiz = useQuiz(repo);
+    const quiz = useQuiz(repo, questions);
     return {
       quiz,
       repositoryUpdateMock,
@@ -84,19 +83,18 @@ describe(useQuiz, () => {
   };
 
   it("should provide the next question", () => {
-    const { quiz } = setup({ questions: [basicQuestion()] });
+    const { quiz } = setup({}, [basicQuestion()]);
     expect(quiz.currentQuestion()).toEqual(basicQuestion());
   });
 
   it("should store answers to a question", () => {
     const question = basicQuestion();
-    const { quiz, mockSetState } = setup({ questions: [question] });
+    const { quiz, mockSetState } = setup({}, [question]);
     quiz.answerQuestion({
       question,
       selectedOption: question.options[0],
     });
     expect(mockSetState).toHaveBeenCalledWith({
-      questions: [question],
       results: [
         {
           question: basicQuestion(),
@@ -113,11 +111,13 @@ describe(useQuiz, () => {
       question: question,
       selectedOption: question.options[0],
     };
-    const { quiz, mockSetState, repositoryUpdateMock } = setup({
-      questions: [question, question2],
-      results: [result],
-      currentIndex: 1,
-    });
+    const { quiz, mockSetState, repositoryUpdateMock } = setup(
+      {
+        results: [result],
+        currentIndex: 1,
+      },
+      [question, question2]
+    );
 
     quiz.answerQuestion({
       question: question2,
@@ -125,7 +125,6 @@ describe(useQuiz, () => {
     });
 
     expect(mockSetState).toHaveBeenCalledWith({
-      questions: [question, question2],
       currentIndex: 2,
       results: [
         result,
@@ -136,7 +135,6 @@ describe(useQuiz, () => {
       ],
     } as QuizState);
     expect(repositoryUpdateMock).toHaveBeenCalledWith({
-      questions: [question, question2],
       currentIndex: 2,
       results: [
         result,
@@ -155,10 +153,12 @@ describe(useQuiz, () => {
       question: question,
       selectedOption: question.options[0],
     };
-    const { quiz, mockSetState, repositoryUpdateMock } = setup({
-      questions: [question, question2],
-      results: [result],
-    });
+    const { quiz, mockSetState, repositoryUpdateMock } = setup(
+      {
+        results: [result],
+      },
+      [question, question2]
+    );
 
     quiz.answerQuestion({
       question: question,
@@ -166,7 +166,6 @@ describe(useQuiz, () => {
     });
 
     expect(mockSetState).toHaveBeenCalledWith({
-      questions: [question, question2],
       currentIndex: 1,
       results: [
         {
@@ -176,7 +175,6 @@ describe(useQuiz, () => {
       ],
     } as QuizState);
     expect(repositoryUpdateMock).toHaveBeenCalledWith({
-      questions: [question, question2],
       currentIndex: 1,
       results: [
         {
@@ -194,16 +192,17 @@ describe(useQuiz, () => {
       question: question,
       selectedOption: question.options[0],
     };
-    const { quiz, mockSetState, repositoryUpdateMock } = setup({
-      questions: [question, question2],
-      results: [result],
-      currentIndex: 1,
-    });
+    const { quiz, mockSetState, repositoryUpdateMock } = setup(
+      {
+        results: [result],
+        currentIndex: 1,
+      },
+      [question, question2]
+    );
 
     quiz.previousQuestion();
 
     expect(mockSetState).toHaveBeenCalledWith({
-      questions: [question, question2],
       currentIndex: 0,
       results: [result],
     } as QuizState);
@@ -216,16 +215,17 @@ describe(useQuiz, () => {
       question: question,
       selectedOption: question.options[0],
     };
-    const { quiz, mockSetState, repositoryUpdateMock } = setup({
-      questions: [question, question2],
-      results: [result],
-      currentIndex: 0,
-    });
+    const { quiz, mockSetState, repositoryUpdateMock } = setup(
+      {
+        results: [result],
+        currentIndex: 0,
+      },
+      [question, question2]
+    );
 
     quiz.previousQuestion();
 
     expect(mockSetState).toHaveBeenCalledWith({
-      questions: [question, question2],
       currentIndex: 0,
       results: [result],
     } as QuizState);
@@ -238,16 +238,17 @@ describe(useQuiz, () => {
       question: question,
       selectedOption: question.options[0],
     };
-    const { quiz, mockSetState, repositoryUpdateMock } = setup({
-      questions: [question, question2],
-      results: [result],
-      currentIndex: 1,
-    });
+    const { quiz, mockSetState, repositoryUpdateMock } = setup(
+      {
+        results: [result],
+        currentIndex: 1,
+      },
+      [question, question2]
+    );
 
     quiz.reset();
 
     expect(mockSetState).toHaveBeenCalledWith({
-      questions: [question, question2],
       currentIndex: 0,
       results: [],
     } as QuizState);
@@ -263,11 +264,13 @@ describe(useQuiz, () => {
       question: question,
       selectedOption: question.options[0],
     };
-    const { quiz } = setup({
-      currentIndex,
-      results: [result],
-      questions: [question],
-    });
+    const { quiz } = setup(
+      {
+        currentIndex,
+        results: [result],
+      },
+      [question]
+    );
 
     expect(quiz.complete).toBe(complete);
   });

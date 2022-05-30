@@ -19,7 +19,7 @@ const upsertResult = (
   return [...beforeDuplicate, newResult, ...afterDuplicate];
 };
 
-export const useQuiz = (repo: QuizRepository) => {
+export const useQuiz = (repo: QuizRepository, questions: Question[]) => {
   const [state, updateState] = useState(repo.retrieveState());
   const update = (state: QuizState) => {
     repo.update(state);
@@ -27,7 +27,7 @@ export const useQuiz = (repo: QuizRepository) => {
   };
   return {
     currentQuestion(): Question {
-      return state.questions[state.currentIndex];
+      return questions[state.currentIndex];
     },
     answerQuestion(result: Result): void {
       const updatedState = {
@@ -37,9 +37,8 @@ export const useQuiz = (repo: QuizRepository) => {
       };
       update(updatedState);
     },
-    complete: state.currentIndex >= state.questions.length,
+    complete: state.currentIndex >= questions.length,
     previousQuestion: () => {
-      console.log("Prev", state);
       update({
         ...state,
         currentIndex: Math.max(0, state.currentIndex - 1),

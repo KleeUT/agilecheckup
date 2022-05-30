@@ -22,7 +22,6 @@ type Result = {
 
 type QuizState = {
   results: Result[];
-  questions: Question[];
   currentIndex: number;
 };
 

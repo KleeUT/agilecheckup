@@ -1,5 +1,6 @@
-import { quizAnalyser } from "./quizAnalyser";
-describe(quizAnalyser, () => {
+import { useQuizAnalysis } from "./quizAnalyser";
+import { QuizRepository } from "./quizRepository";
+describe(useQuizAnalysis, () => {
   function question1(): Question {
     return {
       text: "question 1",
@@ -93,12 +94,17 @@ describe(quizAnalyser, () => {
       ],
     };
   }
+  function aQuizRepositoryWithState(quizState: QuizState): QuizRepository {
+    return {
+      update: jest.fn(),
+      retrieveState: () => quizState,
+    };
+  }
   describe("Score calculation", () => {
     it("should calculate the percentage", () => {
       const questions = [question1(), question2(), question3()];
       const quiz: QuizState = {
         currentIndex: 3,
-        questions,
         results: [1, 2, 3].map(
           (x, i) =>
             ({
@@ -111,7 +117,7 @@ describe(quizAnalyser, () => {
             } as Result)
         ),
       };
-      const result = quizAnalyser(quiz);
+      const result = useQuizAnalysis(aQuizRepositoryWithState(quiz));
       expect(result.scorePercent).toEqual(40);
     });
     it("should calculate the percentage", () => {
@@ -119,7 +125,6 @@ describe(quizAnalyser, () => {
 
       const quiz: QuizState = {
         currentIndex: 3,
-        questions,
         results: [2, 2, 3].map(
           (x, i) =>
             ({
@@ -132,7 +137,7 @@ describe(quizAnalyser, () => {
             } as Result)
         ),
       };
-      const result = quizAnalyser(quiz);
+      const result = useQuizAnalysis(aQuizRepositoryWithState(quiz));
       expect(result.scorePercent).toEqual(140 / 3);
     });
   });
@@ -140,7 +145,6 @@ describe(quizAnalyser, () => {
     function aQuizState(results: Result[]): QuizState {
       return {
         currentIndex: results.length - 1,
-        questions: results.map((x) => x.question),
         results: results,
       };
     }
@@ -160,7 +164,7 @@ describe(quizAnalyser, () => {
             selectedOption: question.options[option],
           },
         ]);
-        const result = quizAnalyser(quizState);
+        const result = useQuizAnalysis(aQuizRepositoryWithState(quizState));
         expect(result.prioritisedAdvice[0]).toEqual(question.advice[advice]);
       }
     );
@@ -175,7 +179,7 @@ describe(quizAnalyser, () => {
           selectedOption: question2().options[3],
         },
       ]);
-      const result = quizAnalyser(quizState);
+      const result = useQuizAnalysis(aQuizRepositoryWithState(quizState));
       expect(result.prioritisedAdvice).toEqual([
         question2().advice[1],
         question1().advice[0],

@@ -22,7 +22,7 @@ const dark: Theme = {
     backgroundHilight: "#3c074b",
     text: { copy: "#ffefff", warning: "#f08023" },
     button: {
-      feature: "#40afff",
+      feature: "#007177",
       primary: "#1f151f",
     },
   },

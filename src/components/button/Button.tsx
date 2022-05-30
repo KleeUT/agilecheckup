@@ -1,7 +1,7 @@
-import { css } from "@emotion/react";
+import { css, SerializedStyles } from "@emotion/react";
 import { ButtonHTMLAttributes } from "react";
 import { useMyTheme, Theme, lightenDarkenColor, Variant } from "../theme";
-import { Link } from "gatsby";
+import { GatsbyLinkProps, Link } from "gatsby";
 
 enum ButtonVariation {
   base,
@@ -81,23 +81,37 @@ export const Button = ({
 export function ButtonLink({
   to,
   onClick,
+  cssOverride,
   children,
 }: {
   to?: string;
   onClick?: () => void;
   children: React.ReactNode;
+  cssOverride?: SerializedStyles;
 }) {
   const theme = useMyTheme();
   if (to) {
     return (
-      <Link to={to} css={buttonStyle(theme, ButtonVariation.base)}>
+      <Link
+        to={to}
+        css={css`
+          ${buttonStyle(theme, ButtonVariation.base)};
+          ${cssOverride};
+        `}
+      >
         {children}
         {/* <div /> */}
       </Link>
     );
   } else {
     return (
-      <a onClick={onClick} css={buttonStyle(theme, ButtonVariation.base)}>
+      <a
+        onClick={onClick}
+        css={css`
+          ${buttonStyle(theme, ButtonVariation.base)};
+          ${cssOverride};
+        `}
+      >
         {children}
         {/* <div /> */}
       </a>

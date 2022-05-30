@@ -9,7 +9,7 @@ const baseStyle = (theme: Theme) => css`
   border-radius: 0.5rem;
 `;
 
-export const Copy = ({ children }: { children: string }) => {
+export const Copy = ({ children }: { children: string | number }) => {
   const theme = useMyTheme();
   return <p css={baseStyle(theme)}>{children}</p>;
 };

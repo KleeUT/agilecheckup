@@ -1,4 +1,5 @@
 import { Quiz } from "./quiz";
+import { QuizRepository } from "./quizRepository";
 
 function prioritizeAdvice(completedQuiz: QuizState): Advice[] {
   const advice = completedQuiz.results
@@ -9,14 +10,12 @@ function prioritizeAdvice(completedQuiz: QuizState): Advice[] {
     )
     .filter((x) => x != undefined) as Advice[];
 
-  console.table(advice);
   advice.sort((a, b) => (a < b ? 1 : -1));
-  console.table(advice);
-
   return advice;
 }
 
-export function quizAnalyser(completedQuiz: QuizState): QuizAnalysis {
+export function useQuizAnalysis(quizRepository: QuizRepository): QuizAnalysis {
+  const completedQuiz = quizRepository.retrieveState();
   const scorePercent =
     completedQuiz.results.reduce((previous, current) => {
       const result = Math.round((current.selectedOption.score / 5) * 100);
