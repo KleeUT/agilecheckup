@@ -30,7 +30,9 @@ const handlePost: PagesFunction = async ({ request }) => {
 
 export const onRequestGet: PagesFunction = ({ request }) => {
   if (/request_headers/.test(request.url)) {
-    return new Response(JSON.stringify({ headers: request.headers }));
+    let allHeaders: string[] = [];
+    request.headers.forEach((header) => allHeaders.push(header));
+    return new Response(JSON.stringify({ allHeaders }));
   }
   if (/full_request/.test(request.url)) {
     return new Response(JSON.stringify(request));
