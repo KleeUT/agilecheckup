@@ -1,6 +1,14 @@
 import React, { useState } from "react";
 import { css, ThemeProvider, useTheme } from "@emotion/react";
-import { Containers, Headings, Theme, Buttons, Copy } from "../components";
+import {
+  Containers,
+  Headings,
+  Theme,
+  Buttons,
+  Copy,
+  Spacing,
+  ExternalLink,
+} from "../components";
 
 const { Main } = Containers;
 const { Copy: Text } = Copy;
@@ -19,13 +27,22 @@ function App() {
             This quiz goes through a short set of questions to asses the health
             of your agile process.
           </Text>
-          <Buttons.FeatureButtonLink to="/quiz">
+          <Buttons.FeatureButtonLink
+            cssOverride={css`
+              ${Spacing.Margin.bottom1};
+              ${Spacing.Margin.top1}
+            `}
+            to="/quiz"
+          >
             Take the quiz
           </Buttons.FeatureButtonLink>
           <Text>
             If you disagree with the questions, advice or just have some innput
-            you'd like to add you can reach out on GitHub. Raise an issue or a
-            PR, we'd love to hear from you.
+            you'd like to add you can reach out on{" "}
+            <ExternalLink href="https://github.com/KleeUT/agilecheckup">
+              GitHub
+            </ExternalLink>
+            . Raise an issue or a PR, we'd love to hear from you.
           </Text>
         </div>
       </Main>

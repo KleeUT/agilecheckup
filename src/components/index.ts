@@ -6,3 +6,4 @@ export * as Copy from "./copy";
 export * as Rating from "./rating";
 export * as Spacing from "./spacing";
 export { Collapse } from "./collapse";
+export { ExternalLink } from "./Link";

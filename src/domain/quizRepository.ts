@@ -1,10 +1,10 @@
 export function createRepository(
-  localStorage: Storage,
+  localStorageProvider: () => Storage | undefined,
   factory: () => QuizState
 ) {
   const key = "quiz";
   function store(state: QuizState) {
-    localStorage.setItem(key, JSON.stringify(state));
+    localStorageProvider()?.setItem(key, JSON.stringify(state));
   }
   function initialise(): QuizState {
     const state = factory();
@@ -12,7 +12,7 @@ export function createRepository(
     return state;
   }
   function retrieveState(): QuizState {
-    const dehydrated = localStorage.getItem(key);
+    const dehydrated = localStorageProvider()?.getItem(key);
     if (!dehydrated) {
       return initialise();
     }

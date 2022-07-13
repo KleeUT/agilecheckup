@@ -7,25 +7,23 @@ export const Header = ({ onPrevClicked }: { onPrevClicked?: () => void }) => {
       css={css`
         height: 50px;
         display: flex;
-        justify-content: space-between;
+        justify-content: center;
         align-items: center;
       `}
     >
-      <div
-        css={css`
-          width: 100px;
-        `}
-      >
-        {onPrevClicked ? (
-          <Button
-            onClick={() => {
-              onPrevClicked();
-            }}
-          >
-            Prev
-          </Button>
-        ) : null}
-      </div>
+      {onPrevClicked ? (
+        <Button
+          cssOverride={css`
+            width: 100px;
+          `}
+          onClick={() => {
+            onPrevClicked();
+          }}
+        >
+          Prev
+        </Button>
+      ) : null}
+
       <Headings.H1>Agile Checkup</Headings.H1>
       <div />
     </div>

@@ -52,5 +52,18 @@ export const H2 = ({
   cssOverride?: SerializedStyles;
 }): JSX.Element => {
   const theme = useMyTheme();
-  return <h1 css={headingStyles(theme, size, cssOverride)}>{children}</h1>;
+  return <h2 css={headingStyles(theme, size, cssOverride)}>{children}</h2>;
+};
+
+export const H3 = ({
+  children,
+  size,
+  cssOverride,
+}: {
+  size?: number;
+  children: string;
+  cssOverride?: SerializedStyles;
+}): JSX.Element => {
+  const theme = useMyTheme();
+  return <h3 css={headingStyles(theme, size, cssOverride)}>{children}</h3>;
 };

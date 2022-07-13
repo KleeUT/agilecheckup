@@ -63,13 +63,19 @@ const buttonStyle = (theme: Theme, variation: ButtonVariation) => {
         box-shadow: 3px 3px 0px 0px ${theme.colors.primary}; */
 export const Button = ({
   children,
+  cssOverride,
   ...props
-}: ButtonHTMLAttributes<HTMLButtonElement>) => {
+}: ButtonHTMLAttributes<HTMLButtonElement> & {
+  cssOverride?: SerializedStyles;
+}) => {
   const theme = useMyTheme();
   return (
     <button
       type="button"
-      css={buttonStyle(theme, ButtonVariation.base)}
+      css={css`
+        ${buttonStyle(theme, ButtonVariation.base)};
+        ${cssOverride}
+      `}
       {...props}
     >
       {children}
@@ -122,10 +128,12 @@ export function FeatureButtonLink({
   to,
   children,
   state,
+  cssOverride,
 }: {
   to: string;
   children: React.ReactNode;
   state?: unknown;
+  cssOverride?: SerializedStyles;
 }) {
   const theme = useMyTheme();
 
@@ -133,7 +141,10 @@ export function FeatureButtonLink({
     <Link
       state={state}
       to={to}
-      css={buttonStyle(theme, ButtonVariation.feature)}
+      css={css`
+        ${buttonStyle(theme, ButtonVariation.feature)};
+        ${cssOverride}
+      `}
     >
       {children}
       {/* <div /> */}

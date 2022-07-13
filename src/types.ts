@@ -30,3 +30,9 @@ type QuizAnalysis = {
   prioritisedAdvice: Advice[];
   scorePercent: number;
 };
+
+type ResultSubmissionBody = {
+  data: {
+    results: Result[];
+  };
+};

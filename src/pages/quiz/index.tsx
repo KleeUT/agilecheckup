@@ -12,6 +12,7 @@ import { Quiz, useQuiz } from "../../domain";
 import { createRepository } from "../../domain/quizRepository";
 import { quizFactory } from "../../domain/quizFactory";
 import { questionFactory } from "../../domain/questionFactory";
+import { useWindow } from "../../utils/useWindow";
 
 const { Main } = Containers;
 
@@ -67,8 +68,9 @@ function LinkToResults({ quiz }: { quiz: Quiz }) {
 }
 
 function QuizPage() {
+  const ls = useWindow();
   const quiz = useQuiz(
-    createRepository(localStorage, quizFactory),
+    createRepository(() => ls.localStorage, quizFactory),
     questionFactory()
   );
   return (

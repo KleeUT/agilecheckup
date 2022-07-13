@@ -1,1 +1,1 @@
-export { Copy, Warning } from "./Copy";
+export { Copy, Warning, baseStyle as CopyStyle } from "./Copy";
