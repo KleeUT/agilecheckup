@@ -13,6 +13,7 @@ import { createRepository } from "../../domain/quizRepository";
 import { quizFactory } from "../../domain/quizFactory";
 import { questionFactory } from "../../domain/questionFactory";
 import { useWindow } from "../../utils/useWindow";
+import { navigate } from "gatsby";
 
 const { Main } = Containers;
 
@@ -48,7 +49,13 @@ function QuestionDisplay({
   );
 }
 
-function LinkToResults({ quiz }: { quiz: Quiz }) {
+function LinkToResults({
+  quiz,
+  quizState,
+}: {
+  quiz: Quiz;
+  quizState: QuizState;
+}) {
   return (
     <>
       <Headings.H2
@@ -60,7 +67,20 @@ function LinkToResults({ quiz }: { quiz: Quiz }) {
         All Done
       </Headings.H2>
       <Copy.Copy>Last chance to go back and change your answers</Copy.Copy>
-      <Buttons.FeatureButtonLink to="/quiz/results" state={quiz}>
+      <Buttons.FeatureButtonLink
+        onClick={async () => {
+          const url = `${process.env.GATSBY_API_URL}/api/result`;
+          console.log(`using url ${url}`);
+          await fetch(url, {
+            method: "POST",
+            body: JSON.stringify(quizState.results),
+            headers: {
+              "Content-Type": "application/json",
+            },
+          });
+          navigate("/quiz/results", { state: quiz });
+        }}
+      >
         Get Results
       </Buttons.FeatureButtonLink>
     </>
@@ -69,10 +89,8 @@ function LinkToResults({ quiz }: { quiz: Quiz }) {
 
 function QuizPage() {
   const ls = useWindow();
-  const quiz = useQuiz(
-    createRepository(() => ls.localStorage, quizFactory),
-    questionFactory()
-  );
+  const repo = createRepository(() => ls.localStorage, quizFactory);
+  const quiz = useQuiz(repo, questionFactory());
   return (
     <ThemeProvider theme={Theme.theme(Theme.Variant.dark)}>
       <Main
@@ -81,7 +99,7 @@ function QuizPage() {
         }
       >
         {quiz.complete ? (
-          <LinkToResults quiz={quiz} />
+          <LinkToResults quiz={quiz} quizState={repo.retrieveState()} />
         ) : (
           <QuestionDisplay
             onSelect={quiz.answerQuestion}

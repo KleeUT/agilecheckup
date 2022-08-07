@@ -1,5 +1,5 @@
 import { css, SerializedStyles } from "@emotion/react";
-import { ButtonHTMLAttributes } from "react";
+import { ButtonHTMLAttributes, MouseEventHandler } from "react";
 import { useMyTheme, Theme, lightenDarkenColor, Variant } from "../theme";
 import { GatsbyLinkProps, Link } from "gatsby";
 
@@ -100,6 +100,7 @@ export function ButtonLink({
     return (
       <Link
         to={to}
+        onClick={onclick ? onClick : () => {}}
         css={css`
           ${buttonStyle(theme, ButtonVariation.base)};
           ${cssOverride};
@@ -127,20 +128,36 @@ export function ButtonLink({
 export function FeatureButtonLink({
   to,
   children,
+  onClick,
   state,
   cssOverride,
 }: {
-  to: string;
+  to?: string;
   children: React.ReactNode;
+  onClick?: MouseEventHandler<HTMLAnchorElement>;
+
   state?: unknown;
   cssOverride?: SerializedStyles;
 }) {
   const theme = useMyTheme();
-
+  if (onClick) {
+    return (
+      <a
+        onClick={onClick}
+        css={css`
+          ${buttonStyle(theme, ButtonVariation.feature)};
+          ${cssOverride}
+        `}
+      >
+        {children}
+        {/* <div /> */}
+      </a>
+    );
+  }
   return (
     <Link
       state={state}
-      to={to}
+      to={to!}
       css={css`
         ${buttonStyle(theme, ButtonVariation.feature)};
         ${cssOverride}

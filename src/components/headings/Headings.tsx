@@ -36,7 +36,7 @@ export const H1 = ({
   cssOverride,
 }: {
   size?: number;
-  children: string;
+  children: string | string[];
   cssOverride?: SerializedStyles;
 }): JSX.Element => {
   const theme = useMyTheme();
@@ -48,7 +48,7 @@ export const H2 = ({
   cssOverride,
 }: {
   size?: number;
-  children: string;
+  children: string | string[];
   cssOverride?: SerializedStyles;
 }): JSX.Element => {
   const theme = useMyTheme();
@@ -61,7 +61,7 @@ export const H3 = ({
   cssOverride,
 }: {
   size?: number;
-  children: string;
+  children: string | string[];
   cssOverride?: SerializedStyles;
 }): JSX.Element => {
   const theme = useMyTheme();

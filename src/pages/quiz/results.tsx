@@ -30,7 +30,6 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <Main>
-        <Headings.H2 size={2}>Results?</Headings.H2>
         <Rating.Rating
           percent={quizAnaysis.scorePercent}
           cssOverride={css`
@@ -50,6 +49,7 @@ function App() {
         {quizAnaysis.prioritisedAdvice.slice(1).map((x) => {
           return (
             <div
+              key={x.text}
               css={css`
                 ${Spacing.Margin.bottom1}
                 width:100%;

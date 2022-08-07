@@ -64,5 +64,14 @@ const errorHandler: PagesFunction = async ({ next }) => {
   }
 };
 
-export const onRequest = [jsonResponses, corsOpen, errorHandler];
+const ipAddress: PagesFunction = ({ request, next, data }) => {
+  const callerIp = request.headers.get("cf-connecting-ip");
+  if (!callerIp) {
+    return new Response("could not determine caller ip", { status: 400 });
+  }
+  data["connectingIp"] = request.headers.get("cf-connecting-ip");
+  return next();
+};
+
+export const onRequest = [errorHandler, jsonResponses, corsOpen, ipAddress];
 export const onRequestOpeions = [preflightChecks];

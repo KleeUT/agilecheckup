@@ -178,11 +178,68 @@ export function questionFactory(): Question[] {
     ],
   });
 
+  const vision = (): Question => ({
+    text: "How well would you say the members of the team can describe the product vision?",
+    advice: [],
+    options: [
+      {
+        score: 5,
+        text: "We all share a vision and can communicate it effectively.",
+      },
+      {
+        score: 4,
+        text: "The senior members of the team share a vision and can communicate it.",
+      },
+      {
+        score: 3,
+        text: "The product manager has a vision and is available to communicate it.",
+      },
+      {
+        score: 2,
+        text: "There is a vision but it is not well defined.",
+      },
+      {
+        score: 1,
+        text: "I'm not sure that there is a vision.",
+      },
+    ],
+  });
+
+  // Work out how to word this
+  // const visionDelivery = (): Question => ({
+  //   text: "How empowered is the team to deliver the product vision?",
+  //   advice: [],
+  //   options: [
+  //     {
+  //       score: 5,
+  //       text: "The team is free to make decisions that help us get to where we need to go.",
+  //     },
+  //     {
+  //       score: 4,
+  //       text: "The senior members of the team share a vision and can communicate it.",
+  //     },
+  //     {
+  //       score: 3,
+  //       text: "The product manager has a vision and is available to communicate it.",
+  //     },
+  //     {
+  //       score: 2,
+  //       text: "There is a vision but it is not well defined.",
+  //     },
+  //     {
+  //       score: 1,
+  //       text: "I'm not sure that there is a vision.",
+  //     },
+  //   ],
+  // });
+
   return [
     deployFrequency(),
     automatedTests(),
     collaboration(),
+    vision(),
     retrospectives(),
     monitoring(),
+    // visionDelivery(),
   ];
 }

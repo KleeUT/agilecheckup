@@ -1,3 +1,5 @@
+import { initialise } from "../../server";
+
 const validateResults = (results: Partial<Result>[]): boolean => {
   const valid = results.reduce((p, c) => {
     if (!p) {
@@ -13,8 +15,15 @@ const validateResults = (results: Partial<Result>[]): boolean => {
 
   return valid;
 };
-const handlePost: PagesFunction = async ({ request }) => {
+const handlePost: PagesFunction<
+  { RESULT_STORE: KVNamespace },
+  "",
+  { connectingIp: string }
+> = async ({ request, env, data }) => {
+  const server = initialise(env.RESULT_STORE);
   const body = (await request.json()) as ResultSubmissionBody;
+
+  server.storeResults(data.connectingIp, body.data.results);
   const results = body?.data?.results;
   if (!results || !validateResults(results)) {
     return new Response(
@@ -31,7 +40,6 @@ const handlePost: PagesFunction = async ({ request }) => {
 export const onRequestGet: PagesFunction = ({ request }) => {
   if (/request_headers/.test(request.url)) {
     let allHeaders: { value: string; key: string }[] = [];
-    // request.headers.
     request.headers.forEach((value, key) => allHeaders.push({ value, key }));
     return new Response(JSON.stringify({ allHeaders }));
   }
