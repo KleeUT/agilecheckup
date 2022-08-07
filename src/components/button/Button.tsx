@@ -100,7 +100,6 @@ export function ButtonLink({
     return (
       <Link
         to={to}
-        onClick={onclick ? onClick : () => {}}
         css={css`
           ${buttonStyle(theme, ButtonVariation.base)};
           ${cssOverride};
