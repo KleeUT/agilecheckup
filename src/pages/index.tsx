@@ -1,5 +1,5 @@
 import { css, ThemeProvider, useTheme } from "@emotion/react";
-import { Containers, Headings, Theme, Buttons } from "../components";
+import { Containers, Headings, Theme, Buttons, Spacing } from "../components";
 
 const { Main } = Containers;
 
@@ -14,10 +14,24 @@ function App() {
           `}
         >
           <Headings.H1>How Agile Is Your Team?</Headings.H1>
-          <Buttons.FeatureButtonLink to="/quiz">
+          <Buttons.FeatureButtonLink
+            cssOverride={css`
+              ${Spacing.Margin.bottom1};
+              ${Spacing.Margin.top1}
+            `}
+            to="/quiz"
+          >
             Find out
           </Buttons.FeatureButtonLink>
-          <Buttons.ButtonLink to="/about">What is this?</Buttons.ButtonLink>
+          <Buttons.ButtonLink
+            cssOverride={css`
+              ${Spacing.Margin.bottom1};
+              ${Spacing.Margin.top1}
+            `}
+            to="/about"
+          >
+            What is this?
+          </Buttons.ButtonLink>
         </div>
       </Main>
     </ThemeProvider>

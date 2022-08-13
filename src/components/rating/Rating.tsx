@@ -51,7 +51,7 @@ export const Rating = ({
     <div>
       <Headings.H2 size={2}>
         Your team is agile like a{" "}
-        {ratings.find((x) => percent < x.upto)?.rating || ""}
+        {ratings.find((x) => percent <= x.upto)?.rating || ""}
       </Headings.H2>
       <div
         css={css`

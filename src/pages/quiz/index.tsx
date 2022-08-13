@@ -70,14 +70,15 @@ function LinkToResults({
       <Buttons.FeatureButtonLink
         onClick={async () => {
           const url = `${process.env.GATSBY_API_URL}/api/result`;
-          console.log(`using url ${url}`);
-          await fetch(url, {
-            method: "POST",
-            body: JSON.stringify(quizState.results),
-            headers: {
-              "Content-Type": "application/json",
-            },
-          });
+          try {
+            await fetch(url, {
+              method: "POST",
+              body: JSON.stringify(quizState.results),
+              headers: {
+                "Content-Type": "application/json",
+              },
+            });
+          } catch (_) {}
           navigate("/quiz/results", { state: quiz });
         }}
       >

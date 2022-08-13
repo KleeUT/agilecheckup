@@ -1,5 +1,6 @@
 import { useTheme } from "@emotion/react";
 import { Warning } from "../copy/Copy";
+import { lightenDarkenColor } from "./colorUtils";
 
 export enum Variant {
   dark,
@@ -18,11 +19,11 @@ export type Theme = {
 const dark: Theme = {
   variation: Variant.dark,
   colors: {
-    background: "#1f151f",
-    backgroundHilight: "#3c074b",
+    background: "#3c074b",
+    backgroundHilight: lightenDarkenColor("#3c074b", 10),
     text: { copy: "#ffefff", warning: "#f08023" },
     button: {
-      feature: "#007177",
+      feature: "#08e4f0",
       primary: "#1f151f",
     },
   },

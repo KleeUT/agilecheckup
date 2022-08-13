@@ -17,7 +17,9 @@ const buttonStyle = (theme: Theme, variation: ButtonVariation) => {
     font-size: 1.5rem;
     box-sizing: border-box;
     padding: 1rem;
-    color: ${theme.colors.text.copy};
+    color: ${variation === ButtonVariation.feature
+      ? theme.colors.background
+      : theme.colors.text.copy};
     background-color: ${background};
     border-radius: 1rem;
     border: 0;
@@ -106,7 +108,6 @@ export function ButtonLink({
         `}
       >
         {children}
-        {/* <div /> */}
       </Link>
     );
   } else {
@@ -119,7 +120,6 @@ export function ButtonLink({
         `}
       >
         {children}
-        {/* <div /> */}
       </a>
     );
   }
@@ -149,7 +149,6 @@ export function FeatureButtonLink({
         `}
       >
         {children}
-        {/* <div /> */}
       </a>
     );
   }
