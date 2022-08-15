@@ -4,9 +4,11 @@ import useCollapse from "react-collapsed";
 import { useMyTheme } from "../theme";
 
 export function Collapse({
+  label,
   children,
 }: {
   children: React.ReactNode;
+  label?: string;
 }): JSX.Element {
   const theme = useMyTheme();
   const { getCollapseProps, getToggleProps, isExpanded } = useCollapse();
@@ -19,10 +21,10 @@ export function Collapse({
     >
       <button
         css={css`
-          background: ${theme.colors.background};
+          background: transparent;
           border: 0;
           color: ${theme.colors.text.copy};
-          font-size: 2rem;
+          font-size: 1rem;
           cursor: pointer;
           /* transform: translateY(1rem); */
           width: 100%;
@@ -31,7 +33,7 @@ export function Collapse({
         `}
         {...getToggleProps()}
       >
-        {isExpanded ? "-" : "+"}
+        {isExpanded ? `- ${label || ""}` : `+ ${label || ""}`}
       </button>
       <section {...getCollapseProps()}>{children}</section>
     </div>

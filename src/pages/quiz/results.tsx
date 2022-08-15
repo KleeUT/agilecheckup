@@ -37,55 +37,21 @@ function App() {
             ${Spacing.Margin.top1}
           `}
         />
-        <Text>{quizAnaysis.prioritisedAdvice[0]?.text ?? "No advice"}</Text>
-        <Headings.H3
-          cssOverride={css`
-            ${Spacing.Margin.top1}
-          `}
-          size={3}
+        <Collapse label="Advice">
+          <Text>{quizAnaysis.prioritisedAdvice[0]?.text ?? "No advice"}</Text>
+        </Collapse>
+        <Buttons.ButtonLink
+          onClick={() => {
+            quiz.reset();
+            navigate("/aboutAgile");
+          }}
+          cssOverride={Spacing.Margin.top1}
         >
-          Extra advice
+          About agile
+        </Buttons.ButtonLink>
+        <Headings.H3 size={2} cssOverride={Spacing.Margin.top1}>
+          Dont like the result?
         </Headings.H3>
-        {quizAnaysis.prioritisedAdvice.slice(1).map((x) => {
-          return (
-            <div
-              key={x.text}
-              css={css`
-                ${Spacing.Margin.bottom1}
-                width:100%;
-              `}
-            >
-              <Collapse>
-                <Text>{x.text}</Text>
-              </Collapse>
-            </div>
-          );
-        })}
-        <hr />
-        <Headings.H2 size={2}>About Agile</Headings.H2>
-        <Text>
-          Find out more about agile by reading the{" "}
-          <ExternalLink href="https://agilemanifesto.org/principles.html">
-            12 principles that underly the agile manifesto
-          </ExternalLink>{" "}
-          and the{" "}
-          <ExternalLink href="https://agilemanifesto.org">
-            Agile Manifresto
-          </ExternalLink>
-        </Text>
-        <Text>
-          Agile isn't static and opinions have grown from the initital
-          manefesto. If you're interested in more recent takes on agile have a
-          look at{" "}
-          <ExternalLink href="https://modernagile.org/">
-            Modern Agile
-          </ExternalLink>{" "}
-          and{" "}
-          <ExternalLink href="https://heartofagile.com/">
-            The heart of agile
-          </ExternalLink>
-          .
-        </Text>
         <Buttons.ButtonLink
           onClick={() => {
             quiz.reset();
@@ -93,8 +59,17 @@ function App() {
           }}
           cssOverride={Spacing.Margin.top1}
         >
-          Dont like the result? Start over.
+          Start over
         </Buttons.ButtonLink>
+        <Headings.H3 size={2} cssOverride={Spacing.Margin.top1}>
+          Found a problem?
+        </Headings.H3>
+        <ExternalLink
+          href="https://github.com/KleeUT/agilecheckup"
+          cssOverride={Spacing.Margin.top1}
+        >
+          Let us know on GitHub
+        </ExternalLink>
       </Main>
     </ThemeProvider>
   );

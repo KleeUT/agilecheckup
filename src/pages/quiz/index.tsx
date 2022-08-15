@@ -66,7 +66,6 @@ function LinkToResults({
       >
         All Done
       </Headings.H2>
-      <Copy.Copy>Last chance to go back and change your answers</Copy.Copy>
       <Buttons.FeatureButtonLink
         onClick={async () => {
           const url = `${process.env.GATSBY_API_URL}/api/result`;
@@ -94,11 +93,7 @@ function QuizPage() {
   const quiz = useQuiz(repo, questionFactory());
   return (
     <ThemeProvider theme={Theme.theme(Theme.Variant.dark)}>
-      <Main
-        onPrevClicked={
-          quiz.hasPreviousQuestion ? quiz.previousQuestion : undefined
-        }
-      >
+      <Main>
         {quiz.complete ? (
           <LinkToResults quiz={quiz} quizState={repo.retrieveState()} />
         ) : (

@@ -4,7 +4,6 @@ import { Theme, useMyTheme } from "../theme";
 export const baseStyle = (theme: Theme) => css`
   margin: 0;
   padding: 2rem;
-  background: ${theme.colors.background};
   color: ${theme.colors.text.copy};
   border-radius: 0.5rem;
 `;

@@ -9,10 +9,8 @@ const gridPaper = (highlightColor: string): string =>
 
 export const Main = ({
   children,
-  onPrevClicked,
 }: {
   children: React.ReactNode;
-  onPrevClicked?: () => void;
 }): JSX.Element => {
   const theme = useTheme() as Theme;
   return (
@@ -54,10 +52,8 @@ export const Main = ({
           max-width: 100%;
           height: 100%;
           display: grid;
-          /* grid-template-rows: 100px 1fr; */
         `}
       >
-        {/* <Header onPrevClicked={onPrevClicked} /> */}
         <div
           css={css`
             display: flex;
@@ -72,6 +68,3 @@ export const Main = ({
     </div>
   );
 };
-
-// 5V0H5v5H0v1h5v94h1V6h94V5H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-// 5V0H5v5H0v1h5v94h1V6h94V5H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E);

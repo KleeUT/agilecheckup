@@ -35,6 +35,7 @@ const buttonStyle = (theme: Theme, variation: ButtonVariation) => {
     /* box-shadow: ${background}; */
     box-shadow: -1px 1px 0px 0px black;
     position: relative;
+    text-align: center;
     :hover {
       font-weight: bold;
       cursor: pointer;
@@ -42,27 +43,9 @@ const buttonStyle = (theme: Theme, variation: ButtonVariation) => {
     :active {
       background-color: ${lightenDarkenColor(background, -5)};
     }
-    > div {
-      width: 10%;
-      height: 10%;
-      max-height: 10px;
-      top: 10px;
-      right: 10px;
-      border-radius: 3px;
-      position: absolute;
-      background-color: ${lightenDarkenColor(background, 60)};
-    }
-    :hover > div {
-      background-color: ${lightenDarkenColor(background, 40)};
-    }
-    :active > div {
-      background-color: ${lightenDarkenColor(background, 10)};
-    }
   `;
 };
 
-/* background:${theme.colors.background};
-        box-shadow: 3px 3px 0px 0px ${theme.colors.primary}; */
 export const Button = ({
   children,
   cssOverride,
@@ -81,18 +64,19 @@ export const Button = ({
       {...props}
     >
       {children}
-      {/* <div /> */}
     </button>
   );
 };
 
 export function ButtonLink({
   to,
+  href,
   onClick,
   cssOverride,
   children,
 }: {
   to?: string;
+  href?: string;
   onClick?: () => void;
   children: React.ReactNode;
   cssOverride?: SerializedStyles;
@@ -113,6 +97,7 @@ export function ButtonLink({
   } else {
     return (
       <a
+        href={href}
         onClick={onClick}
         css={css`
           ${buttonStyle(theme, ButtonVariation.base)};

@@ -9,7 +9,6 @@ import {
   Copy,
 } from "../components";
 import { RoundButton } from "../components/button";
-import { Header } from "../components/header";
 import useCollapse from "react-collapsed";
 
 const { Main } = Containers;
