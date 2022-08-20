@@ -33,7 +33,6 @@ const handlePost: PagesFunction<
       { status: 400 }
     );
   }
-  // request.
   return new Response("OK");
 };
 

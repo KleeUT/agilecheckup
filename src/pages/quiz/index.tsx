@@ -68,7 +68,7 @@ function LinkToResults({
       </Headings.H2>
       <Buttons.FeatureButtonLink
         onClick={async () => {
-          const url = `${process.env.GATSBY_API_URL}/api/result`;
+          const url = `${process.env.GATSBY_API_URL || ""}/api/result`;
           try {
             await fetch(url, {
               method: "POST",
