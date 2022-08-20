@@ -37,13 +37,12 @@ function App() {
             ${Spacing.Margin.top1}
           `}
         />
-        <Collapse label="Advice">
-          <Text>{quizAnaysis.prioritisedAdvice[0]?.text ?? "No advice"}</Text>
-        </Collapse>
+        <Text>{quizAnaysis.prioritisedAdvice[0]?.text ?? "No advice"}</Text>
+
         <Buttons.ButtonLink
           onClick={() => {
             quiz.reset();
-            navigate("/aboutAgile");
+            navigate("/about-agile");
           }}
           cssOverride={Spacing.Margin.top1}
         >

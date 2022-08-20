@@ -3,11 +3,12 @@ import { Link } from "gatsby";
 import { CopyStyle } from "../copy";
 import { useMyTheme } from "../theme";
 
-export const ExternalLink = (
-  props: React.AnchorHTMLAttributes<HTMLAnchorElement> & {
-    cssOverride?: SerializedStyles;
-  }
-) => {
+export const ExternalLink = ({
+  cssOverride,
+  ...props
+}: React.AnchorHTMLAttributes<HTMLAnchorElement> & {
+  cssOverride?: SerializedStyles;
+}) => {
   const theme = useMyTheme();
   return (
     <a
@@ -16,7 +17,7 @@ export const ExternalLink = (
         ${CopyStyle(theme)}
         text-decoration:underline;
         padding: 0;
-        ${props.cssOverride}
+        ${cssOverride}
       `}
     ></a>
   );

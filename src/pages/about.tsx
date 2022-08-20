@@ -18,7 +18,7 @@ function App() {
     <ThemeProvider theme={theme}>
       <Main>
         <div>
-          <Headings.H1>What is this?</Headings.H1>
+          <Headings.H1 size={2}>What is this?</Headings.H1>
           <Text>
             There is more to agile software development than just having standup
             meetings.
@@ -36,6 +36,15 @@ function App() {
           >
             Take the quiz
           </Buttons.FeatureButtonLink>
+          <Buttons.ButtonLink
+            cssOverride={css`
+              ${Spacing.Margin.bottom1};
+              ${Spacing.Margin.top1}
+            `}
+            to="/about-agile"
+          >
+            About agile
+          </Buttons.ButtonLink>
           <Text>
             If you disagree with the questions, advice or just have some innput
             you'd like to add you can reach out on{" "}

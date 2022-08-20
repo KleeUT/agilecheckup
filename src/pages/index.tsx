@@ -32,6 +32,15 @@ function App() {
           >
             What is this?
           </Buttons.ButtonLink>
+          <Buttons.ButtonLink
+            cssOverride={css`
+              ${Spacing.Margin.bottom1};
+              ${Spacing.Margin.top1}
+            `}
+            to="/about-agile"
+          >
+            About agile
+          </Buttons.ButtonLink>
         </div>
       </Main>
     </ThemeProvider>
