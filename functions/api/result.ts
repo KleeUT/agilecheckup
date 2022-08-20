@@ -23,7 +23,7 @@ const handlePost: PagesFunction<
   const server = initialise(env.RESULT_STORE);
   const body = (await request.json()) as ResultSubmissionBody;
 
-  server.storeResults(data.connectingIp, body.data.results);
+  await server.storeResults(data.connectingIp, body.data.results);
   const results = body?.data?.results;
   if (!results || !validateResults(results)) {
     return new Response(
@@ -36,7 +36,9 @@ const handlePost: PagesFunction<
   return new Response("OK");
 };
 
-export const onRequestGet: PagesFunction = ({ request }) => {
+export const handleGet: PagesFunction<{
+  RESULT_STORE: KVNamespace;
+}> = async ({ request, env }) => {
   if (/request_headers/.test(request.url)) {
     let allHeaders: { value: string; key: string }[] = [];
     request.headers.forEach((value, key) => allHeaders.push({ value, key }));
@@ -45,7 +47,13 @@ export const onRequestGet: PagesFunction = ({ request }) => {
   if (/full_request/.test(request.url)) {
     return new Response(JSON.stringify(request));
   }
+  if (/all_results/.test(request.url)) {
+    const server = initialise(env.RESULT_STORE);
+    const results = await server.retrieveResults();
+    return new Response(JSON.stringify(results));
+  }
   return new Response("teapot", { status: 419 });
 };
 
+export const onRequestGet = [handleGet];
 export const onRequestPost = [handlePost];

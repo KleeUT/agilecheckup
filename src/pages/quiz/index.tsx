@@ -72,7 +72,7 @@ function LinkToResults({
           try {
             await fetch(url, {
               method: "POST",
-              body: JSON.stringify(quizState.results),
+              body: JSON.stringify({ data: { results: quizState.results } }),
               headers: {
                 "Content-Type": "application/json",
               },

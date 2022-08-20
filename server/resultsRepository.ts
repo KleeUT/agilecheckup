@@ -18,6 +18,21 @@ export class ResultsRepository {
     await this.resultsNamespace.put(key, JSON.stringify(results));
   }
 
+  async retrieveResults(): Promise<Result[]> {
+    const keys = await this.resultsNamespace.list();
+    const itemsPromise = keys.keys.map(async (key) => {
+      const n = await this.resultsNamespace.get(key.name);
+      if (!n) {
+        return null;
+      }
+      return JSON.parse(n) as Result;
+    });
+    const results = (await Promise.all(itemsPromise)).filter(
+      (x) => x
+    ) as Result[];
+    return results;
+  }
+
   private async keyFromIp(ip: string): Promise<string> {
     return `${this.timeProvider.utcDateTimeStringNow()}:${await this.hasher.sha256(
       ip

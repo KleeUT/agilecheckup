@@ -16,6 +16,7 @@ const timeProvider: TimeProvider = {
 
 export function initialise(resultsStore: KVNamespace): {
   storeResults: (ip: string, results: Result[]) => Promise<void>;
+  retrieveResults: () => Promise<Result[]>;
 } {
   const resultsRepository = new ResultsRepository(
     resultsStore,
@@ -23,6 +24,11 @@ export function initialise(resultsStore: KVNamespace): {
     hasher
   );
   return {
-    storeResults: async () => {},
+    storeResults: async (ip: string, results: Result[]) => {
+      await resultsRepository.storeResults(results, ip);
+    },
+    retrieveResults: async () => {
+      return await resultsRepository.retrieveResults();
+    },
   };
 }
