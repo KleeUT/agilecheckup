@@ -24,6 +24,7 @@
     "@cloudflare/workers-types": "^3.14.0",
     "@emotion/react": "^11.10.0",
     "@emotion/styled": "^11.10.0",
+    "date-fns": "^2.29.2",
     "gatsby": "^4.11.1",
     "gatsby-plugin-emotion": "^7.11.0",
     "gatsby-plugin-manifest": "^4.11.1",

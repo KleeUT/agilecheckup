@@ -1,18 +1,6 @@
-import { Hasher, ResultsRepository, TimeProvider } from "./resultsRepository";
-
-const hasher: Hasher = {
-  sha256: async (str: string): Promise<string> => {
-    const hashArray = await crypto.subtle.digest(
-      { name: "SHA-256" },
-      new TextEncoder().encode(str)
-    );
-    return String.fromCharCode(...Array.from(new Uint8Array(hashArray)));
-  },
-};
-
-const timeProvider: TimeProvider = {
-  utcDateTimeStringNow: () => new Date().toUTCString(),
-};
+import { hasher } from "./hasher";
+import { ResultsRepository } from "./resultsRepository";
+import { timeProvider } from "./timeProvider";
 
 export function initialise(resultsStore: KVNamespace): {
   storeResults: (ip: string, results: Result[]) => Promise<void>;
@@ -20,8 +8,8 @@ export function initialise(resultsStore: KVNamespace): {
 } {
   const resultsRepository = new ResultsRepository(
     resultsStore,
-    timeProvider,
-    hasher
+    timeProvider(),
+    hasher()
   );
   return {
     storeResults: async (ip: string, results: Result[]) => {
