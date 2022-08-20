@@ -3,6 +3,6 @@ import { TimeProvider } from "./resultsRepository";
 
 export function timeProvider(): TimeProvider {
   return {
-    utcDateTimeStringNow: () => format(new Date(), "yyyy-MM-dd-THH:mm:ss.SSSS"),
+    utcDateTimeStringNow: () => format(new Date(), "yyyy-MM-dd'T'HH:mm:ss'Z'"),
   };
 }
