@@ -34,8 +34,7 @@ export class ResultsRepository {
   }
 
   private async keyFromIp(ip: string): Promise<string> {
-    return `${this.timeProvider.utcDateTimeStringNow()}:${await this.hasher.sha256(
-      ip
-    )}`;
+    const hash = await this.hasher.sha256(ip);
+    return `${this.timeProvider.utcDateTimeStringNow()}:${btoa(hash)}`;
   }
 }
