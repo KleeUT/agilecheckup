@@ -22,7 +22,9 @@ const handlePost: PagesFunction<
 > = async ({ request, env, data }) => {
   const server = initialise(env.RESULT_STORE);
   const body = (await request.json()) as ResultSubmissionBody;
-
+  if (/return_body/.test(request.url)) {
+    return new Response(JSON.stringify(body), { status: 421 });
+  }
   await server.storeResults(data.connectingIp, body.data.results);
   const results = body?.data?.results;
   if (!results || !validateResults(results)) {
@@ -52,7 +54,15 @@ export const handleGet: PagesFunction<{
     const results = await server.retrieveResults();
     return new Response(JSON.stringify(results));
   }
-  return new Response("teapot", { status: 419 });
+  if (/\?env/.test(request.url)) {
+    return new Response(
+      JSON.stringify({
+        envKeys: Object.keys(env),
+        globalKeys: Object.keys(globalThis),
+      })
+    );
+  }
+  return new Response("teapot", { status: 421 });
 };
 
 export const onRequestGet = [handleGet];
