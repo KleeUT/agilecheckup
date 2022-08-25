@@ -1,6 +1,5 @@
-import React, { useState } from "react";
 import { css, ThemeProvider, useTheme } from "@emotion/react";
-import { Containers, Headings, Theme, Copy } from "../components";
+import { Containers, Headings, Theme, Buttons, Spacing } from "../components";
 
 const { Main } = Containers;
 
@@ -15,10 +14,33 @@ function App() {
           `}
         >
           <Headings.H1>How Agile Is Your Team?</Headings.H1>
-          <Copy.Warning>Work in progress: Check back soon</Copy.Warning>
-          <Copy.Copy>
-            A short quiz to check the health of your teams agile processes.
-          </Copy.Copy>
+          <Buttons.FeatureButtonLink
+            cssOverride={css`
+              ${Spacing.Margin.bottom1};
+              ${Spacing.Margin.top1}
+            `}
+            to="/quiz"
+          >
+            Find out
+          </Buttons.FeatureButtonLink>
+          <Buttons.ButtonLink
+            cssOverride={css`
+              ${Spacing.Margin.bottom1};
+              ${Spacing.Margin.top1}
+            `}
+            to="/about"
+          >
+            What is this?
+          </Buttons.ButtonLink>
+          <Buttons.ButtonLink
+            cssOverride={css`
+              ${Spacing.Margin.bottom1};
+              ${Spacing.Margin.top1}
+            `}
+            to="/about-agile"
+          >
+            About agile
+          </Buttons.ButtonLink>
         </div>
       </Main>
     </ThemeProvider>

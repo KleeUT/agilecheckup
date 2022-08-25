@@ -1,15 +1,14 @@
 import { css } from "@emotion/react";
 import { Theme, useMyTheme } from "../theme";
 
-const baseStyle = (theme: Theme) => css`
+export const baseStyle = (theme: Theme) => css`
   margin: 0;
   padding: 2rem;
-  background: ${theme.colors.background};
   color: ${theme.colors.text.copy};
   border-radius: 0.5rem;
 `;
 
-export const Copy = ({ children }: { children: string }) => {
+export const Copy = ({ children }: { children: React.ReactNode }) => {
   const theme = useMyTheme();
   return <p css={baseStyle(theme)}>{children}</p>;
 };

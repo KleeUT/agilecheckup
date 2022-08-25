@@ -1,66 +1,153 @@
-import { css } from "@emotion/react";
-import { ButtonHTMLAttributes } from "react";
-import { useMyTheme, Theme } from "../theme";
-import { Link } from "gatsby";
+import { css, SerializedStyles } from "@emotion/react";
+import { ButtonHTMLAttributes, MouseEventHandler } from "react";
+import { useMyTheme, Theme, lightenDarkenColor, Variant } from "../theme";
+import { GatsbyLinkProps, Link } from "gatsby";
 
-const buttonStyle = (theme: Theme) => css`
-  font-size: 1.5rem;
-  box-sizing: border-box;
-  padding: 1rem;
-  color: ${theme.colors.text.copy};
-  background-color: ${theme.colors.button.primary};
-  border-radius: 3px;
-  border: 0;
-  width: 100%;
-  margin-top: 1rem;
-  font-family: sans-serif;
-  text-decoration: none;
-  display: block;
-  text-align: center;
-  box-shadow: 3px 3px 0px 0px ${theme.colors.button.text};
-  :hover {
-    font-weight: bold;
-    cursor: pointer;
-  }
-`;
+enum ButtonVariation {
+  base,
+  feature,
+}
 
-/* background:${theme.colors.background};
-        box-shadow: 3px 3px 0px 0px ${theme.colors.primary}; */
-export const Button = (props: ButtonHTMLAttributes<HTMLButtonElement>) => {
-  const theme = useMyTheme();
-  return <button type="button" css={buttonStyle(theme)} {...props} />;
+const buttonStyle = (theme: Theme, variation: ButtonVariation) => {
+  const background =
+    variation === ButtonVariation.base
+      ? theme.colors.button.primary
+      : theme.colors.button.feature;
+  return css`
+    font-size: 1.5rem;
+    box-sizing: border-box;
+    padding: 1rem;
+    color: ${variation === ButtonVariation.feature
+      ? theme.colors.background
+      : theme.colors.text.copy};
+    background-color: ${background};
+    border-radius: 1rem;
+    border: 0;
+    width: 100%;
+    max-height: 100%;
+    font-family: sans-serif;
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: -3px 3px 0px 0px
+      ${lightenDarkenColor(theme.colors.backgroundHilight, -25)};
+    /* box-shadow: ${background}; */
+    box-shadow: -1px 1px 0px 0px black;
+    position: relative;
+    text-align: center;
+    :hover {
+      font-weight: bold;
+      cursor: pointer;
+    }
+    :active {
+      background-color: ${lightenDarkenColor(background, -5)};
+    }
+  `;
 };
 
-export const OptionButton = (
-  props: ButtonHTMLAttributes<HTMLButtonElement>
-) => {
+export const Button = ({
+  children,
+  cssOverride,
+  ...props
+}: ButtonHTMLAttributes<HTMLButtonElement> & {
+  cssOverride?: SerializedStyles;
+}) => {
   const theme = useMyTheme();
   return (
     <button
       type="button"
       css={css`
-        ${buttonStyle(theme)};
-        background: ${theme.colors.background};
-        color: ${theme.colors.button.primary};
-        /* box-shadow: 3px 3px 0px 0px ${theme.colors.button.primary}; */
+        ${buttonStyle(theme, ButtonVariation.base)};
+        ${cssOverride}
       `}
       {...props}
-    />
+    >
+      {children}
+    </button>
   );
 };
 
-export function ButtonLink<T>({
+export function ButtonLink({
   to,
+  href,
+  onClick,
+  cssOverride,
   children,
 }: {
-  to: string;
+  to?: string;
+  href?: string;
+  onClick?: () => void;
   children: React.ReactNode;
+  cssOverride?: SerializedStyles;
 }) {
   const theme = useMyTheme();
+  if (to) {
+    return (
+      <Link
+        to={to}
+        css={css`
+          ${buttonStyle(theme, ButtonVariation.base)};
+          ${cssOverride};
+        `}
+      >
+        {children}
+      </Link>
+    );
+  } else {
+    return (
+      <a
+        href={href}
+        onClick={onClick}
+        css={css`
+          ${buttonStyle(theme, ButtonVariation.base)};
+          ${cssOverride};
+        `}
+      >
+        {children}
+      </a>
+    );
+  }
+}
+export function FeatureButtonLink({
+  to,
+  children,
+  onClick,
+  state,
+  cssOverride,
+}: {
+  to?: string;
+  children: React.ReactNode;
+  onClick?: MouseEventHandler<HTMLAnchorElement>;
 
+  state?: unknown;
+  cssOverride?: SerializedStyles;
+}) {
+  const theme = useMyTheme();
+  if (onClick) {
+    return (
+      <a
+        onClick={onClick}
+        css={css`
+          ${buttonStyle(theme, ButtonVariation.feature)};
+          ${cssOverride}
+        `}
+      >
+        {children}
+      </a>
+    );
+  }
   return (
-    <Link to={to} css={buttonStyle(theme)}>
+    <Link
+      state={state}
+      to={to!}
+      css={css`
+        ${buttonStyle(theme, ButtonVariation.feature)};
+        ${cssOverride}
+      `}
+    >
       {children}
+      {/* <div /> */}
     </Link>
   );
 }
